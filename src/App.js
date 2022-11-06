@@ -20,7 +20,7 @@ function App() {
         <pointLight position={[-10, -10, -10]} />
         <Physics>
           <Debug/>
-          <Pointer/>
+          {/* <Pointer/> */}
           <Platform args={[10, 0.3, 10]} />
           {/* <Cube args={[2, 2, 2]} position={[10, 10, 10]} /> */}
           <Sphere/>
