@@ -61,7 +61,7 @@ export function Pointer({ vec = new THREE.Vector3()}){
   return (
     <RigidBody position={[0, 0, 0]} type="kinematicPosition" colliders={false} ref={ref}>
       {/* <BallCollider args={[2]} /> */}
-      <Attractor range={1} strength={5} type="linear" position={[0, 0, 0]} />
+      <Attractor range={2} strength={10} type="static" position={[0, 0, 0]} />
     </RigidBody>
   )
 }

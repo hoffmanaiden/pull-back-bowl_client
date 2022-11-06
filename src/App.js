@@ -1,15 +1,18 @@
 import './App.css';
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, createContext, useReducer, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, TransformControls } from '@react-three/drei'
 import { Physics, RigidBody, Debug, Attractor } from "@react-three/rapier";
 import { Sphere, Cube, Platform, Pointer } from './BasicShapes'
 
 
+export const AppContext = createContext(null)
+
+const initialState = {
+  activeDragObj: null
+}
+
 function App() {
-  let [state, setState] = useState()
-  let [target, setTarget] = useState(null)
-  let [activeDragObj, setActiveDragObj] = useState(null)
 
   return (
     <div className="App">
@@ -20,7 +23,7 @@ function App() {
         <pointLight position={[-10, -10, -10]} />
         <Physics>
           <Debug/>
-          {/* <Pointer/> */}
+          <Pointer/>
           <Platform args={[10, 0.3, 10]} />
           {/* <Cube args={[2, 2, 2]} position={[10, 10, 10]} /> */}
           <Sphere/>
