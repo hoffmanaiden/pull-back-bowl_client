@@ -1,10 +1,12 @@
 import * as THREE from "three"
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, TransformControls, PresentationControls } from '@react-three/drei'
 import { Physics, RigidBody, Debug, BallCollider, Attractor } from "@react-three/rapier";
 import { useSpring, animated } from '@react-spring/three'
 import { useGesture, useDrag } from '@use-gesture/react'
+
+import { AppContext } from "./App";
 
 export function Sphere(props) {
   const ref = useRef()
@@ -14,10 +16,6 @@ export function Sphere(props) {
   const {size, viewport} = useThree()
   const aspect = size.width / viewport.width
 
-  // const [spring, set] = useSpring(() => ({position: [0, 3, 0], config: { friction: 10 } }))
-  // const bind = useGesture({
-  //   onDrag: ({ offset: [x,y]}) => set({ position: [x / aspect, -y / aspect, 0] })
-  // })
 
   const [spring, set] = useSpring(() => ({position: [0, 3, 0] }))
   const bind = useGesture({
@@ -25,15 +23,6 @@ export function Sphere(props) {
   })
 
 
-  // useFrame((state) => {
-  //   const t = state.clock.getElapsedTime()
-  //   if(active){
-  //     ref.current.applyImpulse({x:0.1, y:0, z:-0.1}, true)
-  //     setTimeout(() => {
-  //       ref.current.applyImpulse({x:0, y:1, z:0}, true)
-  //     }, 2000)
-  //   }
-  // })
 
   return (
     <RigidBody colliders="ball" type="Dynamic" position={[0,3,0]} ref={ref} {...bind()}>
@@ -61,7 +50,7 @@ export function Pointer({ vec = new THREE.Vector3()}){
   return (
     <RigidBody position={[0, 0, 0]} type="kinematicPosition" colliders={false} ref={ref}>
       {/* <BallCollider args={[2]} /> */}
-      <Attractor range={2} strength={10} type="static" position={[0, 0, 0]} />
+      <Attractor range={1} strength={10} type="linear" position={[0, 0, 0]} />
     </RigidBody>
   )
 }
@@ -75,6 +64,37 @@ export function Cube(props) {
       </mesh>
     </RigidBody>
   )
+}
+
+export function Sphere2({ vec = new THREE.Vector3()}){
+  const { state, dispatch } = useContext(AppContext)
+  function testEvent(){
+    console.log('ball picked up')
+    dispatch({type: 'setDragObj', value: 'Sphere2'})
+  }
+  function clearTestEvent(){
+    console.log('dropped')
+    dispatch({type: 'clearDragObj'})
+  }
+  const ref = useRef()
+  useFrame(({mouse, viewport}) => {
+    vec.lerp({ x: (mouse.x * viewport.width) / 2, y: (mouse.y * viewport.height) / 2, z: 0 }, 0.2)
+    if(state.activeDragObj === 'Sphere2'){
+      ref.current.setNextKinematicTranslation(vec) 
+    }
+  })
+  return(
+    <RigidBody colliders="ball" type={"kinematicPosition"} ref={state.activeDragObj === 'Sphere2' ? ref : null}>
+      <mesh 
+        position={[0, 2, 0]}
+        onPointerDown={(event) => testEvent()}
+        onPointerUp={(event) => clearTestEvent()}
+      >
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshStandardMaterial color={'orange'} />
+      </mesh>
+    </RigidBody>
+  ) 
 }
 
 export function Platform(props) {
