@@ -1,8 +1,15 @@
 # Pull Back Bowl
 Trying to launch this ball at some pins
 
-## Todo
+## Todo 🫡
+- [ ] Update handle position in state, each time its moved
+- [ ] draw a line between ball and handle
+- [ ] create a fixed radius for the handles movement
+- [ ] clean and archive unused components
+- [ ] bring in leva
+- [ ] add handle position to leva
+
+## Done 🙂
 - [x] pick up ball
 - [x] drop ball
 - [x] get camera angle cursor/ball movement right
-- [ ] build a slingshot-like launching behavior  

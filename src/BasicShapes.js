@@ -22,17 +22,14 @@ export function Cube(props) {
 export function Sphere({ vec = new THREE.Vector3()}){
   const { state, dispatch } = useContext(AppContext)
   function pickUp(){
-    console.log('ball picked up')
     dispatch({type: 'setDragObj', value: 'Sphere'})
   }
   function drop(){
-    console.log('dropped')
     dispatch({type: 'clearDragObj'})
   }
   const ref = useRef()
   useFrame(({mouse, viewport}) => {
     vec.lerp({ x: (mouse.x * viewport.width) / 2, y: ((mouse.y * viewport.height) / 2) - 2, z: 0 }, 0.2)
-    // vec.lerp({ x: 2, y:2, z: -2 }, 0.2)
     if(state.activeDragObj === 'Sphere'){
       ref.current.setTranslation(vec) 
     }

@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, TransformControls } from '@react-three/drei'
 import { Physics, RigidBody, Debug, Attractor } from "@react-three/rapier";
 import { Sphere, Cube, Platform, Pointer } from './BasicShapes'
+import { Launcher } from './Tools'
 
 import { reducer } from './State'
 
@@ -11,7 +12,8 @@ import { reducer } from './State'
 export const AppContext = createContext(null)
 
 const initialState = {
-  activeDragObj: null
+  activeDragObj: null,
+  handlePos: [0,2,0]
 }
 
 function App() {
@@ -32,8 +34,9 @@ function App() {
             {/* <Pointer /> */}
             <Platform args={[10, 0.3, 10]} position={[0,-3,3]}/>
             <Platform args={[10, 0.3, 10]} position={[0,-3,-15]}/>
-            <Sphere />
+            {/* <Sphere /> */}
             {/* <Cube /> */}
+            <Launcher/>
           </Physics>
         </Canvas>
       </AppContext.Provider>
