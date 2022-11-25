@@ -13,7 +13,7 @@ export const AppContext = createContext(null)
 
 const initialState = {
   activeDragObj: null,
-  handlePos: [0,2,0]
+  lineEnd: [0,2,0]
 }
 
 function App() {
@@ -36,7 +36,6 @@ function App() {
             <Platform args={[10, 0.3, 10]} position={[0,-3,-15]}/>
             {/* <Sphere /> */}
             {/* <Cube /> */}
-            <Line/>
             <Launcher/>
           </Physics>
         </Canvas>

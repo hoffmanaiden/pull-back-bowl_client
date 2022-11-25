@@ -1,9 +1,9 @@
 export function reducer(state, action){
   switch(action.type){
-    case 'setHandlePos':
+    case 'setLineEnd':
       return {
         ...state,
-        handlePos: action.value
+        lineEnd: action.value
       }
     case 'setDragObj':
       return {

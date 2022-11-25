@@ -62,9 +62,9 @@ export function Platform(props) {
   )
 }
 
-export function Line(props){
-  const start = [0,2,0]
-  const end = [5,2,0]
+export function Line({start, end}){
+  const innerStart = [0,2,0]
+  const innerEnd = [5,2,0]
   const ref = useRef()
   useLayoutEffect(() => {
     ref.current.geometry.setFromPoints([start, end].map((point) => new THREE.Vector3(...point)))

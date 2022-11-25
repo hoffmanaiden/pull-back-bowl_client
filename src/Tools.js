@@ -2,36 +2,31 @@ import * as THREE from "three"
 import { useRef, useState, useEffect, useContext } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Physics, RigidBody, Debug, BallCollider, Attractor } from "@react-three/rapier";
-import { AppContext } from "./App";
-import { LineBasicMaterial } from "three";
+import { Line } from './BasicShapes'
 
-export function Launcher(props, { vec = new THREE.Vector3() }) {
+import { AppContext } from "./App";
+
+export function Launcher({ vec = new THREE.Vector3() }) {
   const { state, dispatch } = useContext(AppContext)
+  let nodePoint = new THREE.Vector3([0,2,0])
+
   function grab() {
-    dispatch({type: 'setDragObj', value: 'Launcher'})
+    dispatch({ type: 'setDragObj', value: 'Launcher' })
   }
   function letGo() {
-    dispatch({type: 'clearDragObj'})
+    dispatch({ type: 'clearDragObj' })
   }
   const ref = useRef()
 
 
-  const points = []
-  points.push(new THREE.Vector3(0,2,0))
-  points.push(new THREE.Vector3(0,5,0))
-
-  useFrame(({ mouse, viewport }) => {
-    vec.lerp({ x: (mouse.x * viewport.width) / 2, y: ((mouse.y * viewport.height) / 2) - 2, z: 0 }, 0.2)
+  useFrame(({ pointer, viewport }) => {
+    vec.lerp({ x: (pointer.x * viewport.width) / 2, y: ((pointer.y * viewport.height) / 2) - 2, z: 0 }, 0.2)
     if (state.activeDragObj === 'Launcher') {
       ref.current.setTranslation(vec)
       console.log(vec)
-      // points[1] = vec
+      console.log(nodePoint)
     }
   })
-
-
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points)
-
 
   return (
     <group>
@@ -40,13 +35,13 @@ export function Launcher(props, { vec = new THREE.Vector3() }) {
         <sphereGeometry args={[2, 8, 8]} />
         <meshStandardMaterial color={'#32a852'} transparent={true} opacity={0.3} />
       </mesh>
-      {/* <line geometry={lineGeometry}>
-        <LineBasicMaterial attach="material" color={'#9c88ff'} linewidth={10} linecap={'round'} linejoin={'round'}/>
-      </line> */}
+
+      <Line start={[0, 2, 0]} end={vec} />
+
       {/* internal ball - handle */}
       <RigidBody colliders="ball" type={"kinematicPosition"} ref={ref} >
-        <mesh 
-          position={[0,2,0]}
+        <mesh
+          position={[0, 2, 0]}
           onPointerDown={(event) => grab()}
           onPointerUp={(event) => letGo()}
         >
