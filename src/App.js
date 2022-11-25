@@ -31,6 +31,7 @@ function App() {
             <Debug />
             {/* <Pointer /> */}
             <Platform args={[10, 0.3, 10]} position={[0,-3,3]}/>
+            <Platform args={[10, 0.3, 10]} position={[0,-3,-15]}/>
             <Sphere />
             {/* <Cube /> */}
           </Physics>
