@@ -18,14 +18,14 @@ export function Launcher(props, { vec = new THREE.Vector3() }) {
 
   const points = []
   points.push(new THREE.Vector3(0,2,0))
-  points.push(new THREE.Vector3(0,2,0))
+  points.push(new THREE.Vector3(0,5,0))
 
   useFrame(({ mouse, viewport }) => {
     vec.lerp({ x: (mouse.x * viewport.width) / 2, y: ((mouse.y * viewport.height) / 2) - 2, z: 0 }, 0.2)
     if (state.activeDragObj === 'Launcher') {
       ref.current.setTranslation(vec)
       console.log(vec)
-      points[1] = vec
+      // points[1] = vec
     }
   })
 

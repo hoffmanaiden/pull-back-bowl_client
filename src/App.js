@@ -3,7 +3,7 @@ import { useRef, useState, useEffect, createContext, useReducer, useMemo } from 
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, TransformControls } from '@react-three/drei'
 import { Physics, RigidBody, Debug, Attractor } from "@react-three/rapier";
-import { Sphere, Cube, Platform, Pointer } from './BasicShapes'
+import { Sphere, Cube, Platform, Line } from './BasicShapes'
 import { Launcher } from './Tools'
 
 import { reducer } from './State'
@@ -36,6 +36,7 @@ function App() {
             <Platform args={[10, 0.3, 10]} position={[0,-3,-15]}/>
             {/* <Sphere /> */}
             {/* <Cube /> */}
+            <Line/>
             <Launcher/>
           </Physics>
         </Canvas>

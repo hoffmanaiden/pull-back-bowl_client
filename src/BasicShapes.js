@@ -1,5 +1,5 @@
 import * as THREE from "three"
-import { useRef, useState, useEffect, useContext } from 'react'
+import { useRef, useState, useLayoutEffect, useEffect, useContext } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, TransformControls, PresentationControls } from '@react-three/drei'
 import { Physics, RigidBody, Debug, BallCollider, Attractor } from "@react-three/rapier";
@@ -59,5 +59,21 @@ export function Platform(props) {
         <meshStandardMaterial color={'yellowgreen'} />
       </mesh>
     </RigidBody>
+  )
+}
+
+export function Line(props){
+  const start = [0,2,0]
+  const end = [5,2,0]
+  const ref = useRef()
+  useLayoutEffect(() => {
+    ref.current.geometry.setFromPoints([start, end].map((point) => new THREE.Vector3(...point)))
+  }, [start, end])
+  // useEffect()
+  return(
+    <line ref={ref}>
+      <bufferGeometry linewidth={5}/>
+      <lineBasicMaterial color="hotpink" />
+    </line>
   )
 }
